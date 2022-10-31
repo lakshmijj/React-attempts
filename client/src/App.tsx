@@ -1,10 +1,16 @@
 import React from 'react';
+import { Route, Routes } from "react-router-dom";
+import { useNavigate, useLocation } from 'react-router-dom';
+
 import { getJSONData } from "./tools/Toolkit";
 import { SamplesData, Sample } from "./tools/Samples.model";
 
 import LoadingOverlay from "./LoadingOverlay/LoadingOverlay";
 import SelectedView from "./SelectedView/SelectedView";
 import AllView from "./AllView/AllView";
+import RandomView from "./RandomView/RandomView";
+import SearchView from "./SearchView/SearchView";
+import Error from "./Error/Error";
 
 // request url of Web API to retrieve JSON
 const RETRIEVE_SCRIPT:string = "http://localhost/portfolioData.php";
@@ -12,6 +18,10 @@ const RETRIEVE_SCRIPT:string = "http://localhost/portfolioData.php";
 // const RETRIEVE_SCRIPT:string = "http://localhost/portfolioData_empty.php";
 
 const App = () => {
+
+  const navigate:Function = useNavigate();
+  const location:string = useLocation().pathname;
+
   // ---------------------------------------------- event handers
   const onResponse = (result:SamplesData) => {
     // data received from Web API
@@ -55,12 +65,39 @@ const App = () => {
             <div>
               <div className="mb-4">
                 View: 
-                <input name="view" className="mx-1.5" type="radio" value="1" defaultChecked onClick={() => setView(1)} />Selected 
-                <input name="view" className="mx-1.5" type="radio" value="2" onClick={() => setView(2)} />All
+                <input name="view" className="mx-1.5" type="radio" value="1" 
+                      defaultChecked={location === "/selected" || location === "/" ? true : false} 
+                      onClick={() => navigate("/selected")} />Selected 
+                <input name="view" className="mx-1.5" type="radio" value="2" 
+                      defaultChecked={location === "/all" ? true : false} 
+                      onClick={() => navigate("/all")} />All
+                <input name="view" className="mx-1.5" type="radio" value="3" 
+                      defaultChecked={location === "/random" ? true : false} 
+                      onClick={() => navigate("/random")} />Random
+                <input name="view" className="mx-1.5" type="radio" value="4" 
+                      defaultChecked={location === "/search" ? true : false} 
+                      onClick={() => navigate("/search")} />Search      
               </div> 
 
-              <SelectedView samples={samples} visible={view === 1 ? true : false} />
-              <AllView samples={samples} visible={view === 2 ? true : false} />
+              <Routes>
+                <Route path="/" 
+                      element={<SelectedView samples={samples} />} />
+
+                <Route path="/selected" 
+                      element={<SelectedView samples={samples} />} />
+
+                <Route path="/all" 
+                      element={<AllView samples={samples} />} />
+                
+                <Route path="/random" 
+                      element={<RandomView samples={samples} />} />
+
+                <Route path="/search" 
+                      element={<SearchView samples={samples} />} />      
+
+                <Route path="/*" 
+                      element={<Error />} />
+              </Routes>
                         
             </div>
             // ----------------------------------------------------------

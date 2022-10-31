@@ -20,5 +20,4 @@ export interface Image {
 /// component property datatypes
 export interface ViewProps {
     samples: Sample[]; 
-    visible: boolean;
 }

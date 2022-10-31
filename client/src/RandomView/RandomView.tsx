@@ -1,16 +1,21 @@
 import React from 'react';
-import { Sample, ViewProps } from "./../tools/Samples.model";
+import { Sample, ViewProps } from '../tools/Samples.model';
+import { getRandom } from "./../tools/Toolkit";
 
-const SearchView = ( { samples }:ViewProps ) => {
+const RandomView = ({samples}:ViewProps) => {
 
-    // setup state variables
-    const [selected, setSelected] = React.useState<Sample>();
+    const onRandom = () => {
+        let index:number = getRandom(0, samples.length - 1);
+        setSelected(samples[index]);
+    };
 
-    return (    
+    const [selected, setSelected] = React.useState<Sample>(samples[getRandom(0, samples.length - 1)]);
+
+    // ------------------------------------------- rendering to the DOM
+    return (
         <div className="flex flex-wrap">
             <div className="pr-5 pb-5">
-                <div><input type="text" className="text-[#035074] p-2 rounded-md" /></div>
-                <div><input type="button" value="Search" className="bg-white text-[#035074] p-2 rounded-md active:bg-[#EEAA40]" /></div>
+                <input type="button" value="Surprise Me!" className="bg-white text-[#035074] p-2 rounded-md active:bg-[#EEAA40]" onClick={onRandom} />
             </div>
 
             <div>
@@ -28,7 +33,7 @@ const SearchView = ( { samples }:ViewProps ) => {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default SearchView;
+export default RandomView;

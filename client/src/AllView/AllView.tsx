@@ -2,10 +2,10 @@
 import React from 'react';
 import { Sample, ViewProps } from "./../tools/Samples.model";
 
-const AllView = ({samples, visible}:ViewProps) => {
+const AllView = ({samples}:ViewProps) => {
 
     return (
-        <div className="flex flex-col flex-wrap" style={{display: (visible ? 'flex' : 'none')}}>
+        <div className="flex flex-col flex-wrap">
             {samples.map((data:Sample,n:number) => {
                 return (
                     <div key={n} className="flex flex-nowrap mb-10">

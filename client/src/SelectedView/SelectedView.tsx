@@ -1,7 +1,7 @@
 import React from 'react';
 import { ViewProps, Sample } from "./../tools/Samples.model";
 
-const SelectedView = ({samples, visible}:ViewProps) => {
+const SelectedView = ({samples}:ViewProps) => {
 
     // ---------------------------------------------- event handlers
     const onChangeSample = (e:any) => {
@@ -16,7 +16,7 @@ const SelectedView = ({samples, visible}:ViewProps) => {
 
     // ------------------------------------------- rendering to the DOM
     return (
-        <div className="flex flex-wrap" style={{display: (visible ? 'flex' : 'none')}}>
+        <div className="flex flex-wrap">
             <div className="pr-5 pb-5">
                 <select id="lstSamples" 
                     className="bg-white hover:bg-opacity-90 text-[#035074] py-2 px-3 rounded mb-3"
